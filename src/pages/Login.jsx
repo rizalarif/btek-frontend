@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import http from '../helpers/http';
 
 function Login() {
@@ -27,6 +27,12 @@ function Login() {
       <input type="password" name="password" />
       <br />
       <button type="submit">Go Login</button>
+      <br />
+      <div>
+        <button className='btnregister'>
+          <Link to="/register">SignUp!</Link>
+        </button>
+      </div>
     </form>
   )
 }
