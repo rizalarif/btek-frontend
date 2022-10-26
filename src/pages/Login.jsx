@@ -29,8 +29,11 @@ function Login() {
       <button type="submit">Go Login</button>
       <br />
       <div>
-        <button className='btnregister'>
+        <button type="submit" className='btnregister'>
           <Link to="/register">SignUp!</Link>
+        </button>
+        <button type="submit" className='btnforgotpassword'>
+          <Link to="/forgotpassword">Forgot Password</Link>
         </button>
       </div>
     </form>

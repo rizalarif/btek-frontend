@@ -5,6 +5,7 @@ import RequireAuth from './components/RequireAuth'
 import Home from './pages/Home'
 import Profile from './pages/Profile'
 import Register from './pages/Register'
+import ForgotPassword from './pages/ForgotPassword'
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/forgotpassword",
+    element: <ForgotPassword />,
   },
 ])
 
