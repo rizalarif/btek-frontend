@@ -11,7 +11,6 @@ const Home = () => {
 
   return (
     <div>Home &middot;
-      {/* <Link to="/character">Go to Character List</Link> */}
       <Link to="/profile">Profile</Link>
       <br />
       <button type="button" onClick={logout}>Logout</button>

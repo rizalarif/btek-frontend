@@ -1,17 +1,25 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import http from '../helpers/http';
 
 function Register() {
   //Navigate
   const navigate = useNavigate();
   const register = async (e) => {
-    try{
+    try {
       e.preventDefault();
-      navigate('/login');
-    }catch(err){
+      const form = {
+        email: e.target.email.value,
+        password: e.target.password.value,
+      };
+      const encoded = new URLSearchParams(form);
+      const {data} = await http().post('/auth/register', encoded.toString());
+      window.localStorage.setItem('token', data.results.token);
+      navigate('/');
+    } catch (err) {
       window.alert(err.response.data.message);
     }
-  }
+  };
 
   // User Interface
   return (
