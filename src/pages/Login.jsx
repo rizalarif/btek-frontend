@@ -8,8 +8,8 @@ function Login() {
     try{
       e.preventDefault();
       const form = {
-      email: e.target.email.value,
-      password: e.target.password.value,
+        email: e.target.email.value,
+        password: e.target.password.value,
       };
       const encoded = new URLSearchParams(form);
       const {data} = await http().post('/auth/login', encoded.toString());
@@ -21,23 +21,26 @@ function Login() {
   }
 
   return (
+    <>
     <form onSubmit={submitAction}>
       <input type="email" name="email" />
       <br />
       <input type="password" name="password" />
       <br />
-      <button type="submit">Go Login</button>
-      <br />
-      <div>
-        <button type="submit" className='btnregister'>
-          <Link to="/register">SignUp!</Link>
-        </button>
-        <button type="submit" className='btnforgotpassword'>
-          <Link to="/forgotpassword">Forgot Password</Link>
-        </button>
-      </div>
+      <button type="submit">Login</button>
     </form>
-  )
+    <div>
+        <Link to="/forgot-password">Forgot Password</Link>
+    </div>
+    <div>
+      <button type="submit" className='btnregister'>
+        <Link to="/register">SignUp!</Link>
+      </button>
+    </div>
+
+    </>
+
+  );
 }
 
 export default Login

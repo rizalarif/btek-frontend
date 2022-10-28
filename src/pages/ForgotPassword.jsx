@@ -1,22 +1,29 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import http from '../helpers/http';
 
-function ForgotPassword(){
-
+function ForgotPassword() {
+  const navigate = useNavigate();
+  const forgotAction = async (e) => {
+    try {
+      e.preventDefault();
+      const email = e.target.email.value;
+      await http().post('/auth/forgot-password', email);
+      navigate('/reset-password');
+    } catch (err) {
+      // eslint-disable-next-line no-alert
+      window.alert(err.response.data.message);
+    }
+  };
   return (
-    <form onSubmit={sendCode}>
-      <h5 className='h5forgot'>
-        Enter your email and we'll send you a secret code to your account email.
-      </h5>
-      <div>
-        Email : <br /><input type="email" name="email"/>
-        <br />
-        <button className='btn-on-forgot' type="submit">send!</button>
-      </div>
+    <form onSubmit={forgotAction}>
+      Input email address, to send the confirmation code
+      <br />
+      <input type="email" name="email" />
+      <br />
+      <button type="submit">Submit</button>
     </form>
-  )
-
+  );
 }
 
-export default ForgotPassword
+export default ForgotPassword;

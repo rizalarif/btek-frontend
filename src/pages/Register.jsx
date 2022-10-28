@@ -15,7 +15,7 @@ function Register() {
       const encoded = new URLSearchParams(form);
       const {data} = await http().post('/auth/register', encoded.toString());
       window.localStorage.setItem('token', data.results.token);
-      navigate('/');
+      navigate('/login');
     } catch (err) {
       window.alert(err.response.data.message);
     }

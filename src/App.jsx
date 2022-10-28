@@ -1,11 +1,14 @@
 import React from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Login from './pages/Login'
 import RequireAuth from './components/RequireAuth'
 import Home from './pages/Home'
+import Login from './pages/Login'
 import Profile from './pages/Profile'
+import EditProfile from './pages/EditProfile'
 import Register from './pages/Register'
 import ForgotPassword from './pages/ForgotPassword'
+import ResetPassword from './pages/ResetPassword'
+
 
 const router = createBrowserRouter([
   {
@@ -18,15 +21,23 @@ const router = createBrowserRouter([
   },
   {
     path: "/profile",
-    element: <RequireAuth> <Profile/> </RequireAuth>,
+    element: <RequireAuth> <Profile /> </RequireAuth>,
+  },
+  {
+    path: "/edit-profile",
+    element:<RequireAuth><EditProfile /></RequireAuth>,
   },
   {
     path: "/register",
     element: <Register />,
   },
   {
-    path: "/forgotpassword",
+    path: "/forgot-password",
     element: <ForgotPassword />,
+  },
+  {
+    path: '/reset-password',
+    element: <ResetPassword />,
   },
 ])
 

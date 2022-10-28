@@ -1,5 +1,6 @@
 import React from 'react'
 import http from '../helpers/http'
+import { Link } from 'react-router-dom'
 
 function Profile() {
   const [userProfile, setUserProfile] = React.useState({})
@@ -29,6 +30,9 @@ function Profile() {
         Picture:
         {' '}
         {userProfile?.picture}
+      </div>
+      <div>
+        <Link to="/edit-profile">Edit Profile</Link>
       </div>
     </div>
   )
