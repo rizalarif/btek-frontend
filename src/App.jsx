@@ -24,7 +24,7 @@ const router = createBrowserRouter([
     element: <RequireAuth> <Profile /> </RequireAuth>,
   },
   {
-    path: "/edit-profile",
+    path: "/profile/edit",
     element:<RequireAuth><EditProfile /></RequireAuth>,
   },
   {
