@@ -31,6 +31,7 @@ function Profile() {
         {' '}
         {userProfile?.picture}
       </div>
+      {userProfile?.picture && <img style={{ width : '250px', height : '100%' }} src={`http://localhost:8888/assets/uploads/${userProfile?.picture}`} alt={userProfile?.fullName} />}
       <div>
         <Link to="/profile/edit">Edit Profile</Link>
       </div>

@@ -1,60 +1,144 @@
 import React from 'react'
+import { Formik, Form, Field } from 'formik';
+import { useNavigate } from 'react-router-dom';
+import YupPassword from 'yup-password';
+import * as Yup from 'yup';
 import http from '../helpers/http'
-import { Link } from 'react-router-dom'
+
+YupPassword(Yup);
 
 function EditProfile() {
-  const [userProfile, setUserProfile] = React.useState({})
+  const navigate = useNavigate();
+
+  const editProfileSchema = Yup.object().shape({
+    fullName: Yup.string().required(),
+    birthDate: Yup.string().required(),
+    picture: Yup.mixed().required(),
+  });
+
+  const [userProfile, setUserProfile] = React.useState({});
   const getProfile = async () => {
-    const token = window.localStorage.getItem('token')
-    const {data} = await http(token).get('/profile')
-    setUserProfile(data.result)
-  };
-
-  const saveData = async (e) => {
-    e.preventDefault();
     const token = window.localStorage.getItem('token');
-
-    const form = new FormData()
-    form.append("fullName", e.target.fullName.value);
-    form.append("birthDate", e.target.birthDate.value);
-    form.append("picture", e.target.picture.files[0]);
-
-    const {data} = await http(token).put('/profile', form, {
-      headers: {
-        "Content-Type": "multipart/form-data"
-      }
-    })
+    const { data } = await http(token).get('/profile');
     setUserProfile(data.results);
-    window.alert('Update data success!');
   };
 
-  React.useEffect(()=>{
-    getProfile()
-  },[])
+  const submitAction = async (values) => {
+    const token = window.localStorage.getItem('token');
+    const form = new FormData();
+    form.append('fullName', values.fullName);
+    form.append('birthDate', values.birthDate);
+    form.append('picture', values.picture);
+    const { data } = await http(token).put('/profile', form, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    setUserProfile(data.results);
+    navigate('/profile');
+  };
+
+  React.useEffect(() => {
+    getProfile();
+  }, []);
 
   return (
     <>
-    {userProfile?.picture && <img style={{ width : '250px', height : '100%' }} src={`http://localhost:8888/assets/uploads/${userProfile?.picture}`} alt={userProfile?.fullName} />}
-    <form onSubmit={saveData}>
-      <div>
-        Full Name:
-        <br />
-        <input type="text" name="fullName" defaultValue={userProfile?.fullName} />
-      </div>
-      <div>
-        Birthdate:
-        <br />
-        <input type="text" name="birthDate" defaultValue={userProfile?.birthDate} />
-      </div>
-      <div>
-        Picture:
-        <br />
-        <input type="file" name="picture" />
-      </div>
-      <button type="submit">Save</button>
-    </form>
+      {userProfile?.picture && <img style={{ width : '250px', height : '100%' }} src={`http://localhost:8888/assets/uploads/${userProfile?.picture}`} alt={userProfile?.fullName} />}
+      <Formik
+        initialValues={{
+          fullName: '',
+          picture: '',
+          birthDate: '',
+        }}
+        validationSchema={editProfileSchema}
+        onSubmit={submitAction}
+      >
+        {({ errors, touched }) => (
+          <Form>
+            Full Name :
+            <Field type="text" name="fullName" />
+            <br />
+            {errors.fullName && touched.fullName ? (
+              <div>{errors.fullName}</div>
+            ) : null}
+            <br />
+            Birth Date :
+            <Field type="text" name="birthDate" />
+            <br />
+            {errors.birthDate && touched.birthDate ? (
+              <div>{errors.birthDate}</div>
+            ) : null}
+            <br />
+            Picture :
+            <Field type="file" name="picture" />
+            <br />
+            {errors.picture && touched.picture ? (
+              <div>{errors.picture}</div>
+            ) : null}
+            <br />
+            <button type="submit">Save</button>
+          </Form>
+        )}
+      </Formik>
     </>
-  )
+  );
 }
 
 export default EditProfile;
+
+  // const [userProfile, setUserProfile] = React.useState({})
+  // const getProfile = async () => {
+  //   const token = window.localStorage.getItem('token')
+  //   const {data} = await http(token).get('/profile')
+  //   setUserProfile(data.result)
+  // };
+
+  // const saveData = async (e) => {
+  //   e.preventDefault();
+  //   const token = window.localStorage.getItem('token');
+
+  //   const form = new FormData()
+  //   form.append("fullName", e.target.fullName.value);
+  //   form.append("birthDate", e.target.birthDate.value);
+  //   form.append("picture", e.target.picture.files[0]);
+
+  //   const {data} = await http(token).put('/profile', form, {
+  //     headers: {
+  //       "Content-Type": "multipart/form-data"
+  //     }
+  //   })
+  //   setUserProfile(data.results);
+  //   window.alert('Update data success!');
+  // };
+
+  // React.useEffect(()=>{
+  //   getProfile()
+  // },[])
+
+  // return (
+  //   <>
+  //   {userProfile?.picture && <img style={{ width : '250px', height : '100%' }} src={`http://localhost:8888/assets/uploads/${userProfile?.picture}`} alt={userProfile?.fullName} />}
+  //   <form onSubmit={saveData}>
+  //     <div>
+  //       Full Name:
+  //       <br />
+  //       <input type="text" name="fullName" defaultValue={userProfile?.fullName} />
+  //     </div>
+  //     <div>
+  //       Birthdate:
+  //       <br />
+  //       <input type="text" name="birthDate" defaultValue={userProfile?.birthDate} />
+  //     </div>
+  //     <div>
+  //       Picture:
+  //       <br />
+  //       <input type="file" name="picture" />
+  //     </div>
+  //     <button type="submit">Save</button>
+  //   </form>
+  //   </>
+  // )
+
+
+

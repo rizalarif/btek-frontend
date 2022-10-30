@@ -53,7 +53,7 @@ function Login() {
     >
       {({errors, touched})=>(
         <Form>
-        <Field type="text" name="email" />
+        <Field type="email" name="email" />
         <br />
         {errors.email && touched.email ?(
             <div>{errors.email}</div>
