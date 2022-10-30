@@ -32,7 +32,7 @@ function Profile() {
         {userProfile?.picture}
       </div>
       <div>
-        <Link to="/edit-profile">Edit Profile</Link>
+        <Link to="/profile/edit">Edit Profile</Link>
       </div>
     </div>
   )
