@@ -1,14 +1,15 @@
 import React from 'react'
 import { Formik, Form, Field } from 'formik';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import YupPassword from 'yup-password';
 import * as Yup from 'yup';
-import http from '../helpers/http'
+// import http from '../helpers/http'
+import {useSelector, useDispatch} from 'react-redux'
+import * as profileAction from '../redux/asyncActions/profile'
 
 YupPassword(Yup);
 
 function EditProfile() {
-  const navigate = useNavigate();
 
   const editProfileSchema = Yup.object().shape({
     fullName: Yup.string().required(),
@@ -16,30 +17,50 @@ function EditProfile() {
     picture: Yup.mixed().required(),
   });
 
-  const [userProfile, setUserProfile] = React.useState({});
-  const getProfile = async () => {
-    const token = window.localStorage.getItem('token');
-    const { data } = await http(token).get('/profile');
-    setUserProfile(data.results);
-  };
+  const dispatch = useDispatch()
+  const userProfile = useSelector(state => state.profile.user)
 
-  const submitAction = async (values) => {
+  const [file, setFile] = React.useState(null);
+  const submitAction = (e) => {
     const token = window.localStorage.getItem('token');
-    const form = new FormData();
-    form.append('fullName', values.fullName);
-    form.append('birthDate', values.birthDate);
-    form.append('picture', values.picture);
-    const { data } = await http(token).put('/profile', form, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    setUserProfile(data.results);
-    navigate('/profile');
+    const data = {
+      fullName: e.fullName,
+      birthDate: e.birthDate,
+      picture: e.picture,
+    };
+
+    dispatch(profileAction.editData({ token, data }));
   };
+  // const [userProfile, setUserProfile] = React.useState({});
+  // const getProfile = async () => {
+  //   const token = window.localStorage.getItem('token');
+  //   const { data } = await http(token).get('/profile');
+  //   setUserProfile(data.results);
+  // };
+
+  // const submitAction = async (values) => {
+  //   const token = window.localStorage.getItem('token');
+
+  //   const form = new FormData();
+  //   form.append('fullName', values.fullName);
+  //   form.append('birthDate', values.birthDate);
+  //   form.append('picture', values.picture);
+
+  //   const { data } = await http(token).put('/profile', form, {
+  //     headers: {
+  //       'Content-Type': 'multipart/form-data',
+  //     },
+  //   });
+  //   setUserProfile(data.results);
+  //   navigate('/profile');
+  // };
 
   React.useEffect(() => {
-    getProfile();
+    // getProfile();
+    const token = window.localStorage.getItem('token');
+    if(!userProfile?.fullName){
+      dispatch(profileAction.getDataUser({token}))
+    }
   }, []);
 
   return (
@@ -81,6 +102,7 @@ function EditProfile() {
           </Form>
         )}
       </Formik>
+      <Link to="/profile">Go to profile page</Link>
     </>
   );
 }
