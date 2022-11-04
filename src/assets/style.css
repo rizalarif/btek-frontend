@@ -2,24 +2,4 @@
 @tailwind components;
 @tailwind utilities;
 
-.btn {
-  @apply rounded-md;
-}
 
-.btnregister {
-  margin-top : 10px;
-  background-color: #AD83E3;
-}
-
-.btnforgotpassword{
-  margin-left : 10px;
-  background-color: #EC1F4F;
-}
-
-.h5forgot{
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.btn-on-forgot{
-  margin-top: 10px
-}

@@ -67,21 +67,14 @@ function Login() {
             {errors.password && touched.password ?(
                 <div className='text-red-400'>{errors.password}</div>
               ) : null}
-            <br />
-            <button className='btn btn-primary block w-full' type='submit'>Login</button>
+            <Link className='mt-2 text-sm hover:text-stone-700' to="/forgot-password">Forgot your password?</Link>
+            <button className='btn mt-5 btn-primary block w-full' type='submit'>Login</button>
+            <p className='text-sm text-center mt-5'>
+              New User? <Link className='underline hover:text-stone-700' to="/register">SignUp!</Link>
+            </p>
           </Form>
           )}
         </Formik>
-      </div>
-      <div className='flex justify-center items-center'>
-        <div>
-            <Link to="/forgot-password">Forgot Password</Link>
-        </div>
-        <div>
-          <button type="submit" className='btnregister'>
-            <Link to="/register">SignUp!</Link>
-          </button>
-        </div>
       </div>
     </>
   );

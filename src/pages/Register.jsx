@@ -1,10 +1,9 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link} from 'react-router-dom'
 import { Formik, Form, Field } from 'formik';
 import YupPassword from 'yup-password';
 import * as Yup from 'yup';
 import http from '../helpers/http';
-
 
 YupPassword(Yup);
 
@@ -27,32 +26,40 @@ function Register() {
   };
 
   return (
-    <Formik
-      initialValues={{
-        email: '',
-        password: '',
-      }}
-      validationSchema={basicAuthSchema}
-      onSubmit={submitAction}
-    >
-      {({ errors, touched }) => (
-        <Form>
-          <Field type="text" name="email" />
-          <br />
-          {errors.email && touched.email ? (
-            <div>{errors.email}</div>
-          ) : null}
-          <br />
-          <Field type="password" name="password" />
-          <br />
-          {errors.password && touched.password ? (
-            <div>{errors.password}</div>
-          ) : null}
-          <br />
-          <button type="submit">Register</button>
-        </Form>
-      )}
-    </Formik>
+    <>
+      <div className='h-screen flex justify-center items-center'>
+        <Formik
+          initialValues={{
+            email: '',
+            password: '',
+          }}
+          validationSchema={basicAuthSchema}
+          onSubmit={submitAction}
+        >
+          {({ errors, touched }) => (
+            <Form>
+              <label htmlFor="email">Email</label>
+              <Field type="text" name="email" className="input input-bordered w-full max-w-xs" />
+              <br />
+              {errors.email && touched.email ? (
+                <div className='text-red-400'>{errors.email}</div>
+              ) : null}
+              <br />
+              <label htmlFor="email">Password</label>
+              <Field type="password" name="password" className="input input-bordered w-full max-w-xs"/>
+              <br />
+              {errors.password && touched.password ? (
+                <div className='text-red-400'>{errors.password}</div>
+              ) : null}
+              <button className='btn mt-6 btn-primary block w-full' type="submit">Register</button>
+              <p className='text-sm text-center mt-5'>
+                Already have an account? <Link className='underline hover:text-stone-700' to="/">Login here</Link>
+              </p>
+            </Form>
+          )}
+        </Formik>
+      </div>
+    </>
   );
 }
 
