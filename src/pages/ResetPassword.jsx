@@ -27,50 +27,55 @@ function ResetPassword() {
     }
   };
   return (
-    <Formik
-      initialValues={{
-        email: '',
-        code: '',
-        newPassword: '',
-        confirmPassword: '',
-      }}
-      validationSchema={basicAuthSchema}
-      onSubmit={submitAction}
-    >
-      {({ errors, touched }) => (
-        <Form>
-          Secret Code :
-          <Field type="text" name="code" />
-          <br />
-          {errors.code && touched.code ? (
-            <div>{errors.code}</div>
-          ) : null}
-          <br />
-          Email :
-          <Field type="text" name="email" />
-          <br />
-          {errors.email && touched.email ? (
-            <div>{errors.email}</div>
-          ) : null}
-          <br />
-          New Password :
-          <Field type="password" name="newPassword" />
-          <br />
-          {errors.newPassword && touched.newPassword ? (
-            <div>{errors.newPassword}</div>
-          ) : null}
-          <br />
-          Confirm Password :
-          <Field type="password" name="confirmPassword" />
-          <br />
-          {errors.confirmPassword && touched.confirmPassword ? (
-            <div>{errors.confirmPassword}</div>
-          ) : null}
-          <br />
-          <button type="submit">Send</button>
-        </Form>
-      )}
-    </Formik>
+    <>
+      <div className='h-screen flex justify-center items-center'>
+        <Formik
+          initialValues={{
+            email: '',
+            code: '',
+            newPassword: '',
+            confirmPassword: '',
+          }}
+          validationSchema={basicAuthSchema}
+          onSubmit={submitAction}
+        >
+          {({ errors, touched }) => (
+            <Form>
+              <label htmlFor="code">Secret Code</label> <br />
+              <Field type="text" name="code" className="input input-bordered w-full max-w-xs hover:input-primary" />
+              <br />
+              {errors.code && touched.code ? (
+                <div className='mb-3'>{errors.code}</div>
+              ) : null}
+              <label htmlFor="email">Email</label><br />
+              <Field type="text" name="email" className="input input-bordered w-full max-w-xs hover:input-primary" />
+              <br />
+              {errors.email && touched.email ? (
+                <div className='mb-3'>{errors.email}</div>
+              ) : null}
+
+              <label htmlFor="password">New Password</label><br />
+              <Field type="password" name="newPassword" className="input input-bordered w-full max-w-xs hover:input-primary" />
+              <br />
+              {errors.newPassword && touched.newPassword ? (
+                <div className='mb-3'>{errors.newPassword}</div>
+              ) : null}
+
+              <label htmlFor="password">Confirm Password</label>
+              <br />
+              <Field type="password" name="confirmPassword" className="input input-bordered w-full max-w-xs hover:input-primary" />
+              <br />
+              {errors.confirmPassword && touched.confirmPassword ? (
+                <div>{errors.confirmPassword}</div>
+              ) : null}
+              <br />
+
+              <button type="submit" className='btn mt-5 btn-primary block w-full'>Send</button>
+            </Form>
+          )}
+        </Formik>
+      </div>
+    </>
   );
 }
 
