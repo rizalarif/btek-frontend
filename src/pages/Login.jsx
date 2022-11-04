@@ -54,15 +54,16 @@ function Login() {
         >
           {({errors, touched})=>(
           <Form>
+            <h1 className='text-center mb-6 text-2xl'>WELCOME TO REACT APP</h1>
             <label htmlFor="email">Email</label>
-            <Field className="input input-bordered w-full max-w-xs" type="email" name="email" />
+            <Field className="input input-bordered w-full max-w-xs hover:input-primary" type="email" name="email" />
             <br />
             {errors.email && touched.email ?(
                 <div className='text-red-400'>{errors.email}</div>
               ) : null}
             <br />
             <label htmlFor="password">Password</label>
-            <Field className="input input-bordered w-full max-w-xs" type="password" name="password" />
+            <Field className="input input-bordered w-full max-w-xs hover:input-primary" type="password" name="password" />
             <br />
             {errors.password && touched.password ?(
                 <div className='text-red-400'>{errors.password}</div>

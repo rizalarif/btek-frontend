@@ -38,15 +38,18 @@ function Register() {
         >
           {({ errors, touched }) => (
             <Form>
+              <h1 className='text-2xl text-center'>React APP</h1>
+              <h2 className='mb-5'>Sign up to see photos from your friends.</h2>
               <label htmlFor="email">Email</label>
-              <Field type="text" name="email" className="input input-bordered w-full max-w-xs" />
+              <br />
+              <Field type="text" name="email" className="input input-bordered w-full max-w-xs hover:input-primary" />
               <br />
               {errors.email && touched.email ? (
                 <div className='text-red-400'>{errors.email}</div>
               ) : null}
               <br />
               <label htmlFor="email">Password</label>
-              <Field type="password" name="password" className="input input-bordered w-full max-w-xs"/>
+              <Field type="password" name="password" className="input input-bordered w-full max-w-xs hover:input-primary"/>
               <br />
               {errors.password && touched.password ? (
                 <div className='text-red-400'>{errors.password}</div>
