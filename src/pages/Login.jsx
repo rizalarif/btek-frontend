@@ -1,6 +1,10 @@
 import React from 'react'
 import { useNavigate, Link } from 'react-router-dom';
-import http from '../helpers/http';
+
+import { useSelector, useDispatch } from 'react-redux';
+import * as auth from '../redux/asyncActions/auth';
+
+// import http from '../helpers/http';
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup';
 import YupPassword from 'yup-password';
@@ -29,17 +33,27 @@ function Login() {
     password : Yup.string().password().required()
   })
 
+  const dispatch = useDispatch();
+  const store = useSelector((state) => state.auth);
 
   const submitAction = async (values) => {
     try{
-      const form = new URLSearchParams(values)
-      const { data } = await http().post('/auth/login', form.toString());
-      window.localStorage.setItem("token", data.results.token);
-      navigate('/');
+      // const form = new URLSearchParams(values)
+      // const { data } = await http().post('/auth/login', form.toString());
+      // window.localStorage.setItem("token", data.results.token);
+      // navigate('/');
+      dispatch(auth.login(values));
     }catch(err){
       window.alert(err.response.data.message);
     }
-  }
+  };
+
+  React.useEffect(() => {
+    if (store.user.token) {
+      window.localStorage.setItem('token', store.user.token);
+      navigate('/');
+    }
+  }, [store]);
 
   return (
     <>
