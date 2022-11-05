@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate, Link } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
-import * as auth from '../redux/asyncActions/auth';
+import * as authAction from '../redux/asyncActions/auth';
 
 // import http from '../helpers/http';
 import { Formik, Form, Field } from 'formik'
@@ -42,7 +42,7 @@ function Login() {
       // const { data } = await http().post('/auth/login', form.toString());
       // window.localStorage.setItem("token", data.results.token);
       // navigate('/');
-      dispatch(auth.login(values));
+      dispatch(authAction.login(values));
     }catch(err){
       window.alert(err.response.data.message);
     }

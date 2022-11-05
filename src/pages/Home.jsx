@@ -1,13 +1,17 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+import * as authAction from '../redux/reducers/auth'
 
 import Button from '../components/Button';
 
 const Home = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const logout = () => {
     window.localStorage.removeItem("token")
+    dispatch(authAction.handleReset());
     navigate("/login")
   }
 

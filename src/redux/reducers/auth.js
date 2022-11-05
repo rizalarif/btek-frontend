@@ -15,6 +15,15 @@ const auth = createSlice({
     builder.addCase(authAction.login.fulfilled, (state, action) => {
       state.user = action.payload.results;
     });
+    builder.addCase(authAction.register.fulfilled, (state, action) => {
+      state.user = action.payload.results;
+    });
+    builder.addCase(authAction.forgotPassword.fulfilled, (state, action) => {
+      state.user = action.payload.results;
+    });
+    builder.addCase(authAction.resetPassword.fulfilled, (state, action) => {
+      state.user = action.payload.results;
+    });
   },
 });
 

@@ -1,9 +1,12 @@
 import React from 'react'
 import { useNavigate, Link} from 'react-router-dom'
 import { Formik, Form, Field } from 'formik';
+import { useSelector, useDispatch } from 'react-redux';
 import YupPassword from 'yup-password';
 import * as Yup from 'yup';
-import http from '../helpers/http';
+// import http from '../helpers/http';
+import * as authAction from '../redux/asyncActions/auth';
+import * as authReset from '../redux/reducers/auth';
 
 YupPassword(Yup);
 
@@ -15,15 +18,26 @@ function Register() {
     password: Yup.string().password().required(),
   });
 
+  const dispatch = useDispatch();
+  const store = useSelector((state) => state.auth);
+
   const submitAction = async (values) => {
     try {
-      const form = new URLSearchParams(values);
-      await http().post('/auth/register', form.toString());
-      navigate('/login');
+      // const form = new URLSearchParams(values);
+      // await http().post('/auth/register', form.toString());
+      // navigate('/login');
+      dispatch(authAction.register(values));
     } catch (err) {
       window.alert(err.response.data.message);
     }
   };
+
+  React.useEffect(() => {
+    if (store.user.email) {
+      dispatch(authReset.handleReset());
+      navigate('/');
+    }
+  }, [store]);
 
   return (
     <>
@@ -42,13 +56,13 @@ function Register() {
               <h2 className='mb-5'>Sign up to see photos from your friends.</h2>
               <label htmlFor="email">Email</label>
               <br />
-              <Field type="text" name="email" className="input input-bordered w-full max-w-xs hover:input-primary" />
+              <Field type="email" name="email" className="input input-bordered w-full max-w-xs hover:input-primary" />
               <br />
               {errors.email && touched.email ? (
                 <div className='text-red-400'>{errors.email}</div>
               ) : null}
               <br />
-              <label htmlFor="email">Password</label>
+              <label htmlFor="password">Password</label>
               <Field type="password" name="password" className="input input-bordered w-full max-w-xs hover:input-primary"/>
               <br />
               {errors.password && touched.password ? (

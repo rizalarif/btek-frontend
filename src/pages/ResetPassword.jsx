@@ -1,9 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import YupPassword from 'yup-password';
 import * as Yup from 'yup';
-import http from '../helpers/http'
+// import http from '../helpers/http'
+import * as authAction from '../redux/asyncActions/auth';
+import * as authReset from '../redux/reducers/auth';
 
 YupPassword(Yup);
 
@@ -17,15 +20,27 @@ function ResetPassword() {
     newPassword: Yup.string().password().required(),
   });
 
+  const dispatch = useDispatch();
+  const store = useSelector((state) => state.auth);
+
   const submitAction = async (values) => {
     try {
-      const form = new URLSearchParams(values);
-      await http().post('/auth/reset-password', form.toString());
-      navigate('/login');
+      // const form = new URLSearchParams(values);
+      // await http().post('/auth/reset-password', form.toString());
+      // navigate('/login');
+      dispatch(authAction.resetPassword(values));
     } catch (err) {
       window.alert(err.response.data.message);
     }
   };
+
+  React.useEffect(() => {
+    if (store.user.email) {
+      dispatch(authReset.handleReset());
+      navigate('/login');
+    }
+  }, [store]);
+
   return (
     <>
       <div className='h-screen flex justify-center items-center'>
