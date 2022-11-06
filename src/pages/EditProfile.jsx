@@ -14,7 +14,7 @@ function EditProfile() {
   const editProfileSchema = Yup.object().shape({
     fullName: Yup.string().required(),
     birthDate: Yup.string().required(),
-    picture: Yup.mixed().required(),
+    picture: Yup.mixed().nullable(),
   });
 
   const dispatch = useDispatch()
@@ -26,7 +26,7 @@ function EditProfile() {
     const data = {
       fullName: e.fullName,
       birthDate: e.birthDate,
-      picture: e.picture,
+      picture: file,
     };
 
     dispatch(profileAction.editData({ token, data }));
@@ -97,7 +97,6 @@ function EditProfile() {
 
     {/* --- Hero Section Start --- */}
     <div className='h-auto flex justify-center items-center'>
-      {userProfile?.picture && <img style={{ width : '250px', height : '100%' }} src={`http://localhost:8888/assets/uploads/${userProfile?.picture}`} alt={userProfile?.fullName} />}
       <Formik
         initialValues={{
           fullName: '',
@@ -118,7 +117,7 @@ function EditProfile() {
             <br />
 
             <label htmlFor="birthDate">Birth Date</label>
-            <Field type="text" name="birthDate" className="input input-bordered w-full max-w-xs hover:input-primary" />
+            <Field type="date" name="birthDate" className="input input-bordered w-full max-w-xs hover:input-primary" />
             <br />
             {errors.birthDate && touched.birthDate ? (
               <div>{errors.birthDate}</div>
@@ -126,7 +125,7 @@ function EditProfile() {
             <br />
 
             <label htmlFor="picture">Picture Profile</label><br />
-            <Field type="file" name="picture" className="file-input file-input-bordered file-input-warning w-full max-w-xs"/>
+            <Field type="file" name="picture" onChange={(e) => setFile(e.target.files[0])} className="file-input file-input-bordered file-input-warning w-full max-w-xs"/>
             <br />
             {errors.picture && touched.picture? (
               <div>{errors.picture}</div>

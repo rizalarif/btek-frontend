@@ -59,9 +59,10 @@ function Profile() {
 
 
     {/* --- hero section start --- */}
-    <div className='hero h-96 bg-base-200'>
+    <div className='hero h-auto bg-base-200'>
       <div className='hero-content text-center'>
         <div className='max-w-xs'>
+        {userProfile?.picture && <img className='mask mask-circle' style={{ width : '195px', height : '100%' }} src={`http://localhost:8888/assets/uploads/${userProfile?.picture}`} alt={userProfile?.fullName} />}
           <div>
             <label htmlFor="fullName">Full Name : </label>
             {' '}
@@ -77,7 +78,6 @@ function Profile() {
             {' '}
             {userProfile?.picture}
           </div>
-          {userProfile?.picture && <img style={{ width : '250px', height : '100%' }} src={`http://localhost:8888/assets/uploads/${userProfile?.picture}`} alt={userProfile?.fullName} />}
           <div>
             <Link className='btn mt-5 hover:bg-slate-800' to="/profile/edit">Edit Profile</Link>
             <br />
