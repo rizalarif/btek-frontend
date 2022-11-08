@@ -16,7 +16,7 @@ const auth = createSlice({
       state.user = action.payload.results;
     });
     builder.addCase(authAction.register.fulfilled, (state, action) => {
-      state.user = action.payload.results;
+      state.user = action.payload.result;
     });
     builder.addCase(authAction.forgotPassword.fulfilled, (state, action) => {
       state.user = action.payload.results;

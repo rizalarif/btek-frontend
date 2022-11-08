@@ -35,7 +35,7 @@ function Register() {
   React.useEffect(() => {
     if (store.user.email) {
       dispatch(authReset.handleReset());
-      navigate('/');
+      navigate('/login');
     }
   }, [store]);
 
