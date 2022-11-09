@@ -74,11 +74,6 @@ function Profile() {
             {userProfile?.birthDate}
           </div>
           <div>
-            Picture:
-            {' '}
-            {userProfile?.picture}
-          </div>
-          <div>
             <Link className='btn mt-5 hover:bg-slate-800' to="/profile/edit">Edit Profile</Link>
             <br />
             <button className='btn mt-5' onClick={()=>dispatch(profileReducerAction.resetProfile())}>Reset data Redux</button>
