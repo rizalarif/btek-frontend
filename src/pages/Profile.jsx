@@ -62,7 +62,7 @@ function Profile() {
     <div className='hero h-auto bg-base-200'>
       <div className='hero-content text-center'>
         <div className='max-w-xs'>
-        {userProfile?.picture && <img className='mask mask-circle' style={{ width : '195px', height : '100%' }} src={`http://localhost:8888/assets/uploads/${userProfile?.picture}`} alt={userProfile?.fullName} />}
+        {userProfile?.picture && <img className='mask mask-circle' style={{ width : '195px', height : '100%' }} src={`${userProfile?.picture}`} alt={userProfile?.fullName} />}
           <div>
             <label htmlFor="fullName">Full Name : </label>
             {' '}
