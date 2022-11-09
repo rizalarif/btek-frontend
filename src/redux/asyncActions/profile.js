@@ -13,7 +13,7 @@ export const editData = createAsyncThunk('profile/editData', async ({ token, dat
   form.append('picture', data.picture);
   const { data: responseData } = await http(token).put('/profile', form, {
     headers: {
-      'Content-Type': 'multypart/form-data',
+      'Content-Type': 'multipart/form-data',
     },
   });
   return responseData;
